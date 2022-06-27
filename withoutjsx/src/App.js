@@ -3,7 +3,7 @@ import './App.css'
 import * as rhh from "react-hyperscript-helpers";
 
 
-let inc = (val) => () => val;
+let inc = val => () => val;
 
 let { h, div, button, span, hr } = rhh;
 
@@ -14,7 +14,7 @@ const useStatic = (any) => {
 export default function App() {
   let [state, setState] = React.useState(0);
 
-  let handlers = useStatic(function () {
+  let allhandle = useStatic(function () {
     return {
       reset: function () {
         setState(inc(0));
@@ -26,18 +26,18 @@ export default function App() {
   });
 
   React.useEffect(function () {
-    setInterval(handlers.increment, 1000);
+    setInterval(allhandle.increment, 1000);
   }, []);
 
   return div([
     span([`Countdown: ${state}`]),
     hr(),
-    div([h(button, { onClick: handlers.reset }, ["Reset To Default"])]),
+    div([h(button, { onClick: allhandle.reset }, ["Reset To Default"])]),
     hr(),
     div([
       button(
         {
-          onClick: handlers.increment
+          onClick: allhandle.increment
         },
         ["Increment the Value By One"]
       )
